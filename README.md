@@ -25,6 +25,7 @@ java -Dauth.hostname=ldap.mydomain.com \
      -Dauth.basedn=dc=mydomain,dc=com
      -Dauth.binddn=uid=myapp,dc=apps,dc=mydomain,dc=com \
      -Dauth.bindpw=supersecret \
+```
 
 ### Configuration
 
