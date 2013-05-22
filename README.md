@@ -33,31 +33,19 @@ java -Dauth.hostname=ldap.mydomain.com \
 All relevant configuration properties can be set via system properties
 (i.e. `java -D...`). The following parameters are required:
 
- * auth.hostname
+ * `auth.hostname` - The hostname of your LDAP server.
 
-   The hostname of your LDAP server.
+ * `auth.basedn` - The base DN in which to search for user ids.
 
- * auth.basedn
+ * `auth.binddn` - The DN with which to bind to the LDAP server to look up usernames.
 
-   The base DN in which to search for user ids
-
- * auth.binddn
-
-   The DN with which to bind to the LDAP server to look up usernames
-
- * auth.bindpw
-
-   The password for the `binddn`
+ * `auth.bindpw` - The password for the `binddn`.
 
 The following parameters are optional:
 
- * auth.port
+ * `auth.port` - The port on which to connect to the LDAP server. Defaults to `636`.
 
-   The port on which to connect to the LDAP server. Defaults to `636`.
-
- * auth.ssl
-
-   Whether or not to use SSL. Defaults to `true`
+ * `auth.ssl` - Should the connection to the LDAP server use SSL. Defaults to `true`.
 
 
 ## Documentation
