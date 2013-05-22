@@ -18,9 +18,55 @@ Add the following dependency to your `project.clj` file:
   (unauthorised))
 ```
 
+Then start your app with the appropriate system properties set:
+
+```
+java -Dauth.hostname=ldap.mydomain.com \
+     -Dauth.basedn=dc=mydomain,dc=com
+     -Dauth.binddn=uid=myapp,dc=apps,dc=mydomain,dc=com \
+     -Dauth.bindpw=supersecret \
+
+### Configuration
+
+All relevant configuration properties can be set via system properties
+(i.e. `java -D...`). The following parameters are required:
+
+ * auth.hostname
+
+   The hostname of your LDAP server.
+
+ * auth.basedn
+
+   The base DN in which to search for user ids
+
+ * auth.binddn
+
+   The DN with which to bind to the LDAP server to look up usernames
+
+ * auth.bindpw
+
+   The password for the `binddn`
+
+The following parameters are optional:
+
+ * auth.port
+
+   The port on which to connect to the LDAP server. Defaults to `636`.
+
+ * auth.ssl
+
+   Whether or not to use SSL. Defaults to `true`
+
+
 ## Documentation
 
 * [API docs](http://realestate-com-au.github.com/clj-ldap-auth/)
+
+
+## Bugs
+
+ * Bind DN/password are not optional (i.e. anonymous binds are not supported)
+ * Username search field is not configurable (hard coded to `uid`)
 
 
 ## History
