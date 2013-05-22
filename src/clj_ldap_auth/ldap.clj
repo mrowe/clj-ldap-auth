@@ -16,21 +16,41 @@
 (def ssl-socket-factory (.createSSLSocketFactory (SSLUtil. (TrustAllTrustManager.))))
 
 (defn- connect
+  "Returns an authenticated connection to the LDAP server"
   [{:keys [host port ssl? bind-dn bind-pw]}]
   (if ssl?
     (LDAPConnection. ssl-socket-factory host port bind-dn bind-pw)
     (LDAPConnection. host port bind-dn bind-pw)))
 
-(defn- uid-filter [username] (str "(uid=" username ")"))
-(defn- results-empty? [results] (= 0 (.getEntryCount results)))
-(defn- first-result [results] (.get (.getSearchEntries results) 0))
-(defn- dn [results] (.getDN (first-result results)))
+(defn- uid-filter
+  "Constructs an LDAP search filter for username"
+  [username]
+  (str "(uid=" username ")"))
+
+(defn- results-empty?
+  "Are there any results?"
+  [results]
+  (= 0 (.getEntryCount results)))
+
+(defn- first-result
+  "Returns the first result in results"
+  [results] (.get (.getSearchEntries results) 0))
+
+(defn- dn
+  "Returns the DN attribute from the first result in results"
+  [results] (.getDN (first-result results)))
 
 (defn- search
+  "Search for username using the supplied connection to the LDAP server"
   [connection username]
   (.search connection (:base-dn config) SearchScope/SUB (uid-filter username) nil))
   
 (defn bind?
+  "Attempts to authenticated with the LDAP server using the supplied
+   username and password. Returns true iff successful.
+
+   Any exceptions that occur communicating with the LDAP server (e.g.
+   invalid bind dn/password) are ignored and false is returned."
   [username password]
   (let [connection (connect config)
         results (search connection username)]
