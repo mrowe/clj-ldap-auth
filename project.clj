@@ -1,7 +1,8 @@
-(defproject clj-ldap-auth "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.5.1"]]
-  :main clj-ldap-auth.core)
+(defproject clj-ldap-auth "0.1.1"
+  :description "A library that provides authentication via an LDAP server"
+  :url "http://github.com/realestate-com-au/clj-ldap-auth"
+  :license {:name "MIT License"
+            :url "http://opensource.org/licenses/MIT"}
+  :dependencies [[org.clojure/clojure "1.2.1"]
+                 [com.unboundid/unboundid-ldapsdk "2.3.3"]]
+  :plugins [[codox "0.6.1"]])
