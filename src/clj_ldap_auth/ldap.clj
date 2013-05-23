@@ -40,7 +40,7 @@
   "Returns the first result in results"
   [results] (.get (.getSearchEntries results) 0))
 
-(defn dn
+(defn- dn
   "Returns the DN attribute from the first result in results.
 
    Returns nil if the DN looks empty (since bind with an empty string
