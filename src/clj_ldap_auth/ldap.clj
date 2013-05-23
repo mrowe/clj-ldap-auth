@@ -40,9 +40,16 @@
   "Returns the first result in results"
   [results] (.get (.getSearchEntries results) 0))
 
-(defn- dn
-  "Returns the DN attribute from the first result in results"
-  [results] (.getDN (first-result results)))
+(defn dn
+  "Returns the DN attribute from the first result in results.
+
+   Returns nil if the DN looks empty (since bind with an empty string
+   always succeeds)."
+  [results]
+  (let [dn (.getDN (first-result results))]
+    (if (empty? (.trim dn))
+      nil
+      dn)))
 
 (defn- search
   "Search for username using the supplied connection to the LDAP server"
