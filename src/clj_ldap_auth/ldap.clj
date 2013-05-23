@@ -38,7 +38,8 @@
 
 (defn- first-result
   "Returns the first result in results"
-  [results] (.get (.getSearchEntries results) 0))
+  [results]
+  (.get (.getSearchEntries results) 0))
 
 (defn- dn
   "Returns the DN attribute from the first result in results.
