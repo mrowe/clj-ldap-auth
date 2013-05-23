@@ -46,8 +46,8 @@
 
    Returns nil if the DN looks empty (since bind with an empty string
    always succeeds)."
-  [results]
-  (let [dn (.getDN (first-result results))]
+  [result]
+  (let [dn (.getDN result)]
     (if (empty? (.trim dn))
       nil
       dn)))
@@ -86,7 +86,7 @@
                results (search connection username)]
            (if (results-empty? results)
              (fail (str "username '" username "' not found"))
-             (if-let [dn (dn results)]
+             (if-let [dn (dn (first-result results))]
                (try-bind dn password sink)
                (fail (str "Could not find a DN for username '" username "'")))))
          (catch Throwable e
