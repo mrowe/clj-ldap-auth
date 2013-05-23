@@ -18,9 +18,13 @@
 (defn- connect
   "Returns an authenticated connection to the LDAP server"
   [{:keys [host port ssl? bind-dn bind-pw]}]
-  (if ssl?
-    (LDAPConnection. ssl-socket-factory host port bind-dn bind-pw)
-    (LDAPConnection. host port bind-dn bind-pw)))
+  (let [connection (LDAPConnection.)]
+    (if ssl?
+      (.setSocketFactory connection ssl-socket-factory))
+    (.connect connection host port)
+    (if (not (nil? bind-dn))
+      (.bind connection bind-dn bind-pw))
+    connection))
 
 (defn- uid-filter
   "Constructs an LDAP search filter for username"

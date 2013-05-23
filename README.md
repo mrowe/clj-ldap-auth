@@ -55,7 +55,6 @@ The following parameters are optional:
 
 ## Bugs
 
- * Bind DN/password are not optional (i.e. anonymous binds are not supported)
  * Username search field is not configurable (hard coded to `uid`)
 
 
