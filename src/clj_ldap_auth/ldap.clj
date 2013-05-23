@@ -55,20 +55,38 @@
   "Search for username using the supplied connection to the LDAP server"
   [connection username]
   (.search connection (:base-dn config) SearchScope/SUB (uid-filter username) nil))
-  
+
+(defn- fail
+  [sink message]
+  (do
+    (sink message)
+    false))
+
+(defn- try-bind
+  [username password sink]
+  (try
+    (connect (assoc config :bind-dn username :bind-pw password))
+    true
+    (catch LDAPException e
+      (fail sink (str "Failed to authenticate '" username "': " (.getMessage e))))))
+
 (defn bind?
   "Attempts to authenticated with the LDAP server using the supplied
    username and password. Returns true iff successful.
 
    Any exceptions that occur communicating with the LDAP server (e.g.
    invalid bind dn/password) are ignored and false is returned."
-  [username password]
-  (let [connection (connect config)
-        results (search connection username)]
-    (if (results-empty? results)
-      false
-      (try
-        (connect (assoc config :bind-dn (dn results) :bind-pw password))
-        true
-        (catch LDAPException e
-          false)))))
+  ([username password]
+     (bind? username password (fn [message])))
+  ([username password sink]
+     (let [fail (partial fail sink)]
+       (try
+         (let [connection (connect config)
+               results (search connection username)]
+           (if (results-empty? results)
+             (fail (str "username '" username "' not found"))
+             (if-let [dn (dn results)]
+               (try-bind dn password sink)
+               (fail (str "Could not find a DN for username '" username "'")))))
+         (catch Throwable e
+           (fail (str "Error connecting to LDAP server '" (:host config) "': " (.getMessage e))))))))
