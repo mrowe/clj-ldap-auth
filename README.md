@@ -58,7 +58,7 @@ The following parameters are optional:
 
 ## Documentation
 
-* [API docs](http://realestate-com-au.github.com/clj-ldap-auth/)
+* [API docs](http://realestate-com-au.github.io/clj-ldap-auth/)
 
 
 ## Bugs
