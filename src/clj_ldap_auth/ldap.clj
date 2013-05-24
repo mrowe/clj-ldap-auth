@@ -76,7 +76,11 @@
    username and password. Returns true iff successful.
 
    Any exceptions that occur communicating with the LDAP server (e.g.
-   invalid bind dn/password) are ignored and false is returned."
+   invalid bind dn/password) are ignored and false is returned. You
+   can optionally pass as a third argument a function that will be
+   called with the reason for the failure, e.g:
+
+     (bind? username password #(println (str \"Error: \" %1)))"
   ([username password]
      (bind? username password (fn [message])))
   ([username password sink]
