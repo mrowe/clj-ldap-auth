@@ -26,7 +26,7 @@
       (.bind connection bind-dn bind-pw))
     connection))
 
-(defn- uid-filter
+(defn uid-filter
   "Constructs an LDAP search filter for username"
   [username]
   (str "(uid=" username ")"))
@@ -41,7 +41,7 @@
   [results]
   (.get (.getSearchEntries results) 0))
 
-(defn- dn
+(defn dn
   "Returns the DN attribute from the first result in results.
 
    Returns nil if the DN looks empty (since bind with an empty string
@@ -57,7 +57,7 @@
   [connection username]
   (.search connection (:base-dn config) SearchScope/SUB (uid-filter username) nil))
 
-(defn- fail
+(defn fail
   [sink message]
   (do
     (sink message)
