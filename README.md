@@ -18,6 +18,16 @@ Add the following dependency to your `project.clj` file:
   (unauthorised))
 ```
 
+Optionally, you can also pass in a function that will be called with
+the reason for any authentication failure (or exception):
+
+```clojure
+(let [result (atom nil)]
+  (if (ldap/bind? username password #(reset! reason %1))
+    (do something-great)
+    (unauthorised reason)))
+```
+
 Then start your app with the appropriate system properties set:
 
 ```
