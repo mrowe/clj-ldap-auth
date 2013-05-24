@@ -3,7 +3,11 @@
 username and password. Returns true iff successful.
 
 Any exceptions that occur communicating with the LDAP server (e.g.
-invalid bind dn/password) are ignored and false is returned.</pre></div><div class="public" id="var-dn"><h3>dn</h3><div class="usage"><code>(dn result)</code></div><pre class="doc">Returns the DN attribute from the first result in results.
+invalid bind dn/password) are ignored and false is returned. You
+can optionally pass as a third argument a function that will be
+called with the reason for the failure, e.g:
+
+  (bind? username password #(println (str &quot;Error: &quot; %1)))</pre></div><div class="public" id="var-dn"><h3>dn</h3><div class="usage"><code>(dn result)</code></div><pre class="doc">Returns the DN attribute from the first result in results.
 
 Returns nil if the DN looks empty (since bind with an empty string
 always succeeds).</pre></div><div class="public" id="var-uid-filter"><h3>uid-filter</h3><div class="usage"><code>(uid-filter username)</code></div><pre class="doc">Constructs an LDAP search filter for username
