@@ -1,3 +1,5 @@
+[![Build Status](https://buildhive.cloudbees.com/job/realestate-com-au/job/clj-ldap-auth/badge/icon)](https://buildhive.cloudbees.com/job/realestate-com-au/job/clj-ldap-auth/)
+
 # clj-ldap-auth
 
 A library that provides authentication via an LDAP server
