@@ -27,7 +27,7 @@ the reason for any authentication failure (or exception):
 (let [reason (atom nil)]
   (if (ldap/bind? username password #(reset! reason %1))
     (do something-great)
-    (unauthorised reason)))
+    (unauthorised @reason)))
 ```
 
 Then start your app with the appropriate system properties set:
