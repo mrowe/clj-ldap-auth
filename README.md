@@ -24,7 +24,7 @@ Optionally, you can also pass in a function that will be called with
 the reason for any authentication failure (or exception):
 
 ```clojure
-(let [result (atom nil)]
+(let [reason (atom nil)]
   (if (ldap/bind? username password #(reset! reason %1))
     (do something-great)
     (unauthorised reason)))
