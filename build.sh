@@ -15,4 +15,4 @@ function lein {
     ${LEIN} do $@
 }
 
-lein clean, check, jar, doc
+lein clean, check, midje, jar, doc
